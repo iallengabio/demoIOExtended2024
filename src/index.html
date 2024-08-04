@@ -1,25 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rotulação de Imagens com Firebase</title>
-</head>
-<body>
-    <header>   
-
-        <h1>Rotulação de Imagens</h1>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button class="circle transparent">
+          <i>menu</i>
+        </button>
+        <h5 class="max center-align">Rotulação de Imagens</h5>
+        <button
+          id="logoutButton"
+          class="page border tertiary-border tertiary-text"
+        >
+          <i>logout</i>
+          <span>Sair</span>
+        </button>
+      </nav>
     </header>
 
-    <main class="responsive">
-        <p>Este é o conteúdo principal da página.</p>
-        <p>Aqui você pode adicionar mais conteúdo, como imagens, tabelas, etc.</p>
+    <main
+      id="loginPage"
+      class="page middle-align center-align responsive max"
+    >
+      <article class="border medium round white large-padding s12 m10 l8 grid">
+        <div class="left-align s12 m6">
+          <i>login</i>
+          <h2>Fazer login</h2>
+          <p>Entre com seu email e senha ou com a sua conta do Google.</p>
+        </div>
+        <div class="s12 m6">
+          <div class="large-space"></div>
+          <div class="field label border">
+            <input type="email" id="emailInput" />
+            <label for="emailInput">Email</label>
+          </div>
+          <div class="field label border">
+            <input type="password" id="passwordInput" />
+            <label for="passwordInput">Senha</label>
+          </div>
+          <div class="space"></div>
+          <nav class="right-align">
+            <button class="border">Criar conta</button>
+            <button id="loginButton" class="">Avançar</button>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+    <main id="rotulationPage" class="page active top-align responsive max vertical">
+      <div class="vertical center-align responsive">
+        <div class="space"></div>
+        <div class="large-padding">
+          <h4 class="margin">Escolha uma imagem para rotular</h4>
+          <div class="field label prefix border margin">
+            <i>image</i>
+            <input id="imgInput" type="file" />
+            <input type="text" />
+            <label>Imagem</label>
+          </div>
+          <button id="rotulationButton" class="primary large">
+            <i>cloud_upload</i>
+            <span>Rotular</span>
+          </button>
+          <div id="snackImgUploadSuccess" class="snackbar">Imagem enviada, rotulando...</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="padding">
+        <h6>Imagens rotuladas</h6>
+        <div class="grid" id="gridImageLabels">
+          
+        </div>
+      </div>
     </main>
 
     <footer>
-        <p>&copy; 2023 - Todos os direitos reservados.</p>
+      <p>&copy; 2023 - Todos os direitos reservados.</p>
     </footer>
-
-    <script src="bundle.js"></script>
-</body>
+  </body>
 </html>
