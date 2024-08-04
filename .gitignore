@@ -9,8 +9,12 @@ firebase-debug.log
 firebaseconfig/
 .firebaserc
 firebase.json
+**/firebaseInit.ts
+
 
 # Aux build
 package-lock.json
 #package.json
 #tsconfig.json
+src/model/services/util/firebaseInit.ts
+
