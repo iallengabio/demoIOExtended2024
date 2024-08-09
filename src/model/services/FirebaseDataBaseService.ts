@@ -12,24 +12,40 @@ export class FirebaseDatabaseService implements IDataBaseService {
     constructor(storageService : IStorageService){
         this.storageService = storageService;
     }
+    
+    
 
-    observeImageLabels(userID: string, callback: (updatedImages: LabeledImage[]) => void): ()=>void {
-        
+    observeImageLabels(userID: string, callback: (updatedImages: LabeledImage[]) => void): () => void {
         const imageLabelsCollection = collection(db, 'ImageLabels');
-
-        //filtrar apenas imagens do usuário
+        const languageCodes = ['en','es','fr','de'];
+        // Filtrar apenas imagens do usuário
         const q = query(imageLabelsCollection, where('file', '>=', `gs://ioextendedphb2024.appspot.com/users/${userID}/images`), where('file', '<=', `gs://ioextendedphb2024.appspot.com/users/${userID}/images~`));
+    
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            //console.log(snapshot.docs);
-            const updatedImages : LabeledImage[] = [];
-            snapshot.docs.forEach((doc)=>{
-                updatedImages.push(new LabeledImage(doc.data()['file']??'',doc.data()['labels']??[]));
+            const updatedImages: LabeledImage[] = [];
+            snapshot.docs.forEach((doc) => {
+                const data = doc.data();
+                const labelsMap = new Map<string, string[]>();
+    
+                // Iterar sobre os objetos de tradução indexados
+                Object.keys(data.translated).forEach(index => {
+                    const translation = data.translated[index];
+                    languageCodes.forEach((languageCode) => {
+                        if (translation[languageCode]) {
+                            labelsMap.set(languageCode, labelsMap.get(languageCode) || []);
+                            labelsMap.get(languageCode)?.push(translation[languageCode]);
+                        }
+                    });
+                });
+    
+                updatedImages.push(new LabeledImage(data.file, labelsMap));
             });
-            //updateImageURLs
-            this.updateImageURLs(updatedImages).then(()=>{
+    
+            this.updateImageURLs(updatedImages).then(() => {
                 callback(updatedImages);
             });
         });
+    
         return unsubscribe;
     }
 

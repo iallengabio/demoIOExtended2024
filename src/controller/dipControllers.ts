@@ -15,3 +15,4 @@ const dataBaseService : IDataBaseService = new FirebaseDatabaseService(storageSe
 export const loginController: LoginController = new LoginController(authService);
 export const uploadImgController: UploadImgController = new UploadImgController(storageService, authService);
 export const labelsController : LabelsController = new LabelsController(authService,dataBaseService);
+

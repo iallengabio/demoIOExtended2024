@@ -1,10 +1,12 @@
 import { loginController } from "../controller/dipControllers";
 
-const loginForm = document.getElementById('loginPage') as HTMLElement;
+//const loginForm = document.getElementById('loginPage') as HTMLElement;
 const emailInput = document.getElementById('emailInput') as HTMLInputElement;
 const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
 const loginButton = document.getElementById('loginButton') as HTMLButtonElement;
 const rotulationPage = document.getElementById('rotulationPage') as HTMLElement;
+const loginPage = document.getElementById('loginPage') as HTMLElement;
+const loadingPage = document.getElementById('loadingPage') as HTMLElement;
 
 loginButton.addEventListener('click', async () => {
     const email = emailInput.value;
@@ -43,15 +45,26 @@ logoutButton.addEventListener('click', async () => {
 
 loginController.onAuthStateChange((user) => {
     if (user) {
-        loginForm.classList.remove('active');
+        deactivateAllPages();
         rotulationPage.classList.add('active');
         logoutButton.classList.add('active');
     }else{
-        loginForm.classList.add('active');
-        rotulationPage.classList.remove('active');
+        deactivateAllPages();
+        loginPage.classList.add('active');
         logoutButton.classList.remove('active');
     }
 });
+
+function deactivateAllPages():void{
+    loadingPage.classList.remove('active');
+    loginPage.classList.remove('active');
+    rotulationPage.classList.remove('active');
+    // const pages = document.getElementsByTagName('main');
+    // for(let i=0;i<pages.length;i++){
+    //     const page = pages.item(i);
+    //     page?.classList.remove('active');
+    // }
+}
 
 logoutButton.hidden = false;
 

@@ -5,6 +5,7 @@ import { User } from "../model/entities/user";
 
 const rotulationButton = document.getElementById('rotulationButton') as HTMLButtonElement;
 const imgInput = document.getElementById('imgInput') as HTMLInputElement;// Cria uma instância do controller
+let languageCode = 'en';
 
 rotulationButton.addEventListener('click', async () => {
   const file = imgInput.files?.[0];
@@ -64,7 +65,7 @@ function createImageCard(labeledImage: LabeledImage): HTMLElement {
   labelContainer.appendChild(labelTitle);
 
   const labelsFragment = document.createDocumentFragment();
-  labeledImage.labels.forEach((label) => {
+  labeledImage.labels.get(languageCode)!.forEach((label) => {
     const labelChip = document.createElement('a');
     labelChip.classList.add('chip', 'small-margin');
     labelChip.textContent = label;
